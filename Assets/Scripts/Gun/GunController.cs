@@ -9,6 +9,8 @@ public class GunController : MonoBehaviour
     [SerializeField] GameObject gunBarrel;
     [SerializeField] GameObject bulletPrefab;
 
+    private Animator animator;
+
     private Vector3 destination;
 
 
@@ -18,8 +20,14 @@ public class GunController : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.Log("Animator is missing!");
+        }
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
+        Q3Movement.Q3PlayerController.OnWalkingStateChanged += UpdateWalkAnimation;
     }
 
     public void StartReload()
@@ -54,6 +62,7 @@ public class GunController : MonoBehaviour
                     destination = hitInfo.point;
                     IDamageable damageable = hitInfo.transform.GetComponent<IDamageable>();
                     damageable?.Damage(gunData.damage);
+                    animator.SetTrigger("Shoot");
                     InstantiateProjectile();
                       
                 }
@@ -76,7 +85,17 @@ public class GunController : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
     }
 
-    
+    private void UpdateWalkAnimation(bool isWalking)
+    {
+        animator.SetBool("isWalking", isWalking);
+    }
 
-    
+    private void OnDestroy()
+    {
+        Q3Movement.Q3PlayerController.OnWalkingStateChanged -= UpdateWalkAnimation;
+    }
+
+
+
+
 }
