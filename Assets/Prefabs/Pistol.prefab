@@ -202,4 +202,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 303baf6c10543874d8e5625bd1a12378, type: 2}
   gunBarrel: {fileID: 1917481743988011086}
-  bulletPrefab: {fileID: 2472450631196180261, guid: 8acbf5632910aab4e8e6823b1b96725a, type: 3}
+  bulletPrefab: {fileID: 2542332492342752030, guid: b1ff90918f1f30c44963d7d0c4037b81, type: 3}
